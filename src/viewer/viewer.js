@@ -156,6 +156,7 @@ export class Viewer extends EventDispatcher{
 		this.filterReturnNumberRange = [0, 7];
 		this.filterNumberOfReturnsRange = [0, 7];
 		this.filterGPSTimeRange = [-Infinity, Infinity];
+		this.filterIntensity = 0;
 		this.filterPointSourceIDRange = [0, 65535];
 
 		this.potreeRenderer = null;
@@ -733,6 +734,11 @@ export class Viewer extends EventDispatcher{
 	setFilterGPSTimeRange(from, to){
 		this.filterGPSTimeRange = [from, to];
 		this.dispatchEvent({'type': 'filter_gps_time_range_changed', 'viewer': this});
+	}
+
+	setFilterIntensity(value){
+		this.filterIntensity = value;
+		this.dispatchEvent({'type': 'filter_intensity_changed', 'viewer': this});
 	}
 
 	setFilterPointSourceIDRange(from, to){
@@ -1643,6 +1649,7 @@ export class Viewer extends EventDispatcher{
 			material.uniforms.uFilterReturnNumberRange.value = this.filterReturnNumberRange;
 			material.uniforms.uFilterNumberOfReturnsRange.value = this.filterNumberOfReturnsRange;
 			material.uniforms.uFilterGPSTimeClipRange.value = this.filterGPSTimeRange;
+			material.uniforms.uFilterIntensity.value = this.filterIntensity;
 			material.uniforms.uFilterPointSourceIDClipRange.value = this.filterPointSourceIDRange;
 
 			material.classification = this.classifications;

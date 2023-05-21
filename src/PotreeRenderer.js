@@ -916,12 +916,13 @@ export class Renderer {
 			}
 
 			{
+				let uFilterIntensity = material.uniforms.uFilterIntensity.value;
 				let uFilterReturnNumberRange = material.uniforms.uFilterReturnNumberRange.value;
 				let uFilterNumberOfReturnsRange = material.uniforms.uFilterNumberOfReturnsRange.value;
 				let uFilterPointSourceIDClipRange = material.uniforms.uFilterPointSourceIDClipRange.value;
 				
 				
-				
+				shader.setUniform1f("uFilterIntensity", uFilterIntensity);
 				shader.setUniform2f("uFilterReturnNumberRange", uFilterReturnNumberRange);
 				shader.setUniform2f("uFilterNumberOfReturnsRange", uFilterNumberOfReturnsRange);
 				shader.setUniform2f("uFilterPointSourceIDClipRange", uFilterPointSourceIDClipRange);
@@ -1111,6 +1112,10 @@ export class Renderer {
 
 					if(attributes["gps-time"]){
 						defines.push("#define clip_gps_enabled");
+					}
+
+					if(attributes["intensity"]){
+						defines.push("#define clip_intensity_enabled");
 					}
 
 					if(attributes["return number"]){

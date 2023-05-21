@@ -83,14 +83,14 @@ gulp.task('webserver', gulp.series(async function() {
 	});
 }));
 
-gulp.task('examples_page', async function(done) {
-	await Promise.all([
-		createExamplesPage(),
-		createGithubPage(),
-	]);
+// gulp.task('examples_page', async function(done) {
+// 	await Promise.all([
+// 		createExamplesPage(),
+// 		createGithubPage(),
+// 	]);
 
-	done();
-});
+// 	done();
+// });
 
 gulp.task('icons_viewer', async function(done) {
 	await createIconsPage();
@@ -160,7 +160,7 @@ gulp.task("shaders", async function(){
 
 gulp.task('build', 
 	gulp.series(
-		gulp.parallel("workers", "lazylibs", "shaders", "icons_viewer", "examples_page"),
+		gulp.parallel("workers", "lazylibs", "shaders", "icons_viewer"),
 		async function(done){
 			gulp.src(paths.html).pipe(gulp.dest('build/potree'));
 
@@ -190,7 +190,7 @@ gulp.task('watch', gulp.parallel("build", "pack", "webserver", async function() 
 		'src/**/*.vs',
 		'src/**/*.fs',
 		'resources/**/*',
-		'examples//**/*.json',
+		// 'examples//**/*.json',
 		'!resources/icons/index.html',
 	];
 

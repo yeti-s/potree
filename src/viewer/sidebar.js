@@ -884,6 +884,7 @@ export class Sidebar{
 		this.initClassificationList();
 		this.initReturnFilters();
 		this.initGPSTimeFilters();
+		this.initIntensityFilters();
 		this.initPointSourceIDFilters();
 
 	}
@@ -1014,6 +1015,41 @@ export class Sidebar{
 			});
 		}
 
+	}
+
+	initIntensityFilters() {
+		let elIntensityFilterPanel = $('#intensity_filter_panel');
+		
+		{
+			let slider = new HierarchicalSlider({
+				levels: 4,
+				range: [0, 255],
+				precision: 1,
+				slide: (event) => {
+					let values = event.values;
+					this.viewer.setFilterIntensity(values[0]);
+				}
+			});
+
+			let initialized = false;
+
+			let initialize = () => {
+				elIntensityFilterPanel[0].prepend(slider.element);
+
+				initialized = true;
+			};
+
+			this.viewer.addEventListener("update", (e) => {
+				let extent = this.viewer.filterIntensity;
+
+				if(!initialized){
+					initialize();
+
+					// slider.setValues(extent);
+				}
+				
+			});
+		}
 	}
 
 	initPointSourceIDFilters() {

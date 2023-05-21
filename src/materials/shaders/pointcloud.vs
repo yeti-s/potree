@@ -86,6 +86,7 @@ uniform vec2 uFilterPointSourceIDClipRange;
 uniform vec2 uFilterGPSTimeClipRange;
 uniform float uGpsScale;
 uniform float uGpsOffset;
+uniform float uFilterIntensity;
 
 uniform vec2 uNormalizedGpsBufferRange;
 
@@ -785,6 +786,17 @@ void doClipping(){
 		if(time < range.x || time > range.y){
 			gl_Position = vec4(100.0, 100.0, 100.0, 0.0);
 			
+			return;
+		}
+	}
+	#endif
+
+	#if defined(clip_intensity_enabled)
+	{ // intensity filter
+		float threshold = uFilterIntensity;
+		
+		if (intensity < threshold) {
+			gl_Position = vec4(100.0, 100.0, 100.0, 0.0);
 			return;
 		}
 	}
